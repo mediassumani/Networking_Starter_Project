@@ -22,9 +22,7 @@ struct PostServices{
     let postSession = URLSession(configuration: .default)
 
     func getPosts(_ completion: @escaping (Result<[Product]>) -> ()) {
-        
         do{
-            
             let request = try HTTPNetworkRequest.configureHTTPRequest(from: .posts, with: parameters, and: .get, contains: nil)
             postSession.dataTask(with: request) { (data, res, err) in
                 
@@ -32,9 +30,7 @@ struct PostServices{
                     
                     let result = HTTPNetworkResponse.handleNetworkResponse(for: response)
                     switch result {
-                
                     case .success:
-                        
                         let result = try? JSONDecoder().decode(ProductList.self, from: unwrappedData)
                         completion(Result.success(result!.posts))
                         
