@@ -8,24 +8,15 @@
 
 import Foundation
 
-public typealias HTTPParameters = [String: Any]
-public typealias HTTPHeaders = [String: String]
+public typealias HTTPParameters = [String: Any]?
+public typealias HTTPHeaders = [String: Any]?
 
 struct HTTPNetworkRequest {
     
-    static let headers = [
-        
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer \(Constant.TOKEN)",
-        "Host": "api.producthunt.com"
-        
-    ]
-    
     /// Set the body, method, headers, and paramaters of the request
-    static func configureHTTPRequest(from route: HTTPNetworkRoute, with parameters: HTTPParameters, and method: HTTPMethod, contains body: Data?) throws -> URLRequest {
+    static func configureHTTPRequest(from url: String, with parameters: HTTPParameters, includes headers: HTTPHeaders, contains body: Data?, and method: HTTPMethod) throws -> URLRequest {
         
-        guard let url = URL(string: "\(Constant.PRODUCT_HUNT_API_BASE_URL)\(route.rawValue)") else { fatalError("Error while unwrapping url")}
+        guard let url = URL(string: url) else { fatalError("Error while unwrapping url")}
         
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         
